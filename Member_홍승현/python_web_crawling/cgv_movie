@@ -110,3 +110,5 @@ for i in j.find_all("a"):
     screen = i['data-screenkorname']
     print(where,start[:2]+"시"+start[2:]+"분"+"~"+end[:2]+"시"+end[2:]+"분",screen,seat+"석")
     print("─────────────────────")
+
+input() #pause
