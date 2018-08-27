@@ -1,0 +1,43 @@
+import requests
+import time
+from bs4 import BeautifulSoup as bs
+
+URL = "http://ticket2.movie.daum.net/Movie/MovieRankList.aspx"
+
+res = requests.get(URL)
+res.encoding = "UTF-8"
+
+soup1 = bs(res.text, 'html5lib')
+
+a = soup1.find_all("div", class_="movie_detail")[0]
+print("----------------------------")
+for i in range(20):
+    b = a.find_all("li")[i]
+    
+    #예매순위
+    c = b.find_all("span", class_="num_rank")[0]
+    d = c.text
+
+
+    #영화제목
+    title1 = b.find_all("strong", class_="tit_join")[0]
+    title2 = title1.find_all("a", class_="link_g")[0]
+    title3 = title2.text
+
+    #평점
+    tomato1 = b.find_all("em", class_="emph_grade")[0].text
+    
+    #개봉일
+    open1 = b.find_all("dl", class_="list_state")[0]
+    open2 = open1.find_all("dd")[0].text
+
+    #예매율
+    rate1 = open1.find_all("dd")[1].text
+    
+    print("예매순위 :", d)
+    print("영화제목 :", title3[49:])
+    print("평점     :", tomato1[53:])
+    print("개봉날짜 :", open2[:10])
+    print("예매율   :", rate1[3:8])
+    print("----------------------------")
+    time.sleep(1)
