@@ -1,0 +1,112 @@
+# -*- coding: UTF-8 -*-
+import requests
+import time
+import datetime
+from bs4 import BeautifulSoup as bs
+ 
+URL = "http://www.cgv.co.kr/reserve/show-times/movies.aspx/"
+ 
+res = requests.get(URL)
+#res.encoding = "UTF-8"
+ 
+soup1 = bs(res.text, 'html5lib')
+
+movie_select1 = soup1.find_all("div", id="movie_list")[0]
+#print(movie_select1)
+#날짜선택
+print("─────────────────────")
+print("(0) 오늘")
+print("(1) 내일")
+print("기타 ex)951128")
+date_select = int(input("\n언제 관람하시겠습니까? : "))
+
+today = datetime.date.today()
+add = ""
+if(today.month < 10):
+    add = "0"
+
+if (date_select == 0):
+    today2 = str(today.year)[2:] + add + str(today.month) + str(today.day)
+    date_select=today2
+if (date_select == 1):
+    today2 = str(today.year)[2:] + add + str(today.month) + str(today.day+1)
+    date_select=today2
+
+#예매순위
+print("\n─────────예매순위────────")
+data_idx = {}
+data_title = {}
+for i in range(10):
+
+    #movie_idx
+    a = movie_select1.find_all("a")[i]
+    movie_idx = a['data-movieidx']
+
+    #movie_tilte
+    movie_select2 = movie_select1.find_all("strong")[i].text
+    print("("+str(i)+")",movie_select2)
+
+    #movie_dictionary
+    movie_info = {}
+    movie_info[str(i)] = movie_idx
+    data_idx.update(movie_info)
+    movie_info = {}
+    movie_info[i] = movie_select2
+    data_title.update(movie_info)
+
+#영화선택
+movie_select = input("\n어떤 영화를 관람하시겠습니까? : ")
+
+#지역선택
+print("\n─────────────────────")
+data_area = {
+    '0':'13',#서울
+    '1':'09',#경기
+    '2':'06',#인천
+    '3':'15,04,05',#대전/충정
+    '4':'14',#대구
+    '5':'12,16',#부산/울산
+    '6':'10,11',#경상
+    '7':'08,02,03,01'#광주/전라/제주
+    }
+
+print("(0) 서울")
+print("(1) 경기")
+print("(2) 인천")
+print("(3) 대전/충정")
+print("(4) 대구")
+print("(5) 부산/울산")
+print("(6) 경상")
+print("(7) 광주/전라/제주")
+
+area_select = input("\n어디서 관람하시겠습니까? : ")
+
+URL = "http://www.cgv.co.kr/common/showtimes/iframeMovie.aspx?midx="+data_idx[movie_select]+"&mcode=&areacode="+data_area[area_select]+"&date="+date_select
+
+res = requests.get(URL)
+#res.encoding = "UTF-8"
+ 
+soup1 = bs(res.text, 'html5lib')
+
+#영화관선택
+i=0
+print("\n─────────────────────")
+for j in soup1.find_all("div", class_="col-times"):
+    where1 = j.find_all("a")[0]
+    where2 = where1['data-theatername']
+    print("("+str(i)+")",where2)
+    i += 1
+
+theater_select = input("\n어디서 관람하시겠습니까? : ")
+
+#시간선택
+print("\n"+date_select+"──────────────────")
+j = soup1.find_all("div", class_="col-times")[int(theater_select)]
+for i in j.find_all("a"):
+    where = i['data-theatername']
+    start = i['data-playstarttime']
+    end = i['data-playendtime']
+    seat = i['data-seatremaincnt']
+    screen = i['data-screenkorname']
+    print(where,start[:2]+"시"+start[2:]+"분"+"~"+end[:2]+"시"+end[2:]+"분",screen,seat+"석")
+    print("─────────────────────")
