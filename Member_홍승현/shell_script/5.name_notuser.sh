@@ -1,8 +1,11 @@
-3번. if.sh
-현재 내가 있는 디렉토리의 위치를 확인한 뒤,
-내가 지금 있는 디렉토리가 '자기이름폴더'라면 화면에 'Your home!'을 출력하고,
-그렇지 않다면, 'Where am i?'를 출력한 뒤, '자기이름 폴더'로 이동합니다.
-이동 한 뒤에는 현재 디렉토리의 파일 목록들을 '-al'옵션을 붙여서 표시해 줍니다.
+5번. name_notuser.sh
+/etc/passwd 파일에서 로그인 쉘이 없는 사용자들의 이름만 추출하여
+이름뒤에 'can't be login' 이라는 문장을 붙여서
+'자기이름폴더' 아래에 name_notuser.txt 로 저장하는 툴을 만들어라.
+ex)
+------ name_notuser.txt ------
+sshd can't be login
+gluster can't be login
 
 #!/bin/bash
 
