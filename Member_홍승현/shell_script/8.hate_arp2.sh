@@ -63,3 +63,7 @@ fi
 
 rm hi.text
 echo "remove hi.text ---------------------------------------"
+
+방식: 처음 실행할 때 arp table의 ip와 mac주소를 저장하고 그 mac주소들 중 중독된 값이 있다면 그 mac주소를 hi.text에 저장한다.
+	이 저장된 mac주소와 처음 저장한 table을 조회하여 맵핑 된 ip를 출력한다. crontab을 사용하기 때문에
+	while문을 뺏고 hi.text도 매 번 삭제해준다.
