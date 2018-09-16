@@ -6,7 +6,6 @@ while true
 do
 	sleep 3
 	Swc=`expr $Swc \* -1`
-	wall $Swc
 	arp -n | grep -v Address | awk '{print $1";"$3}'>${Tmp1}${Swc}
 	count1=`awk -F\; '{print $2}' ${Tmp1}${Swc} | sort | uniq -d`
 	if [ $count1 ]; then
