@@ -13,7 +13,7 @@ do
 		if [ $(grep $hacker_mac -c ${Tmp1}`expr $Swc \* -1`) -ne 1 ]; then
 			wall "Can't find Attacker. But UnderAttack!"
 		else
-			hacker=$(grep $count1 ${Tmp1}`expr $Swc \* -1` | awk -F\; '{print $1}')
+			hacker=$(grep $hacker_mac ${Tmp1}`expr $Swc \* -1` | awk -F\; '{print $1}')
 			echo hacker is $hacker
 		fi
 	fi
