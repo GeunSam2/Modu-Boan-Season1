@@ -10,7 +10,7 @@ do
 	hacker_mac=`awk -F\; '{print $2}' ${Tmp1}${Swc} | sort | uniq -d`
 	if [ $hacker_mac ]; then
 		wall "You Are UnderAttack!! (code:ARP)"
-		if [ $(grep $count1 -c ${Tmp1}`expr $Swc \* -1`) -ne 1 ]; then
+		if [ $(grep $hacker_mac -c ${Tmp1}`expr $Swc \* -1`) -ne 1 ]; then
 			wall "Can't find Attacker. But UnderAttack!"
 		else
 			hacker=$(grep $count1 ${Tmp1}`expr $Swc \* -1` | awk -F\; '{print $1}')
