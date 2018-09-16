@@ -67,3 +67,12 @@ echo "remove hi.text ---------------------------------------"
 방식: 처음 실행할 때 arp table의 ip와 mac주소를 저장하고 그 mac주소들 중 중독된 값이 있다면 그 mac주소를 hi.text에 저장한다.
 	이 저장된 mac주소와 처음 저장한 table을 조회하여 맵핑 된 ip를 출력한다. crontab을 사용하기 때문에
 	while문을 뺏고 hi.text도 매 번 삭제해준다.
+
+의문: grep이나 awk를 사용하여 for문을 돌 때 공백을 기준으로 하여서 원하는 정보를 뽑아 낼 수가 없는데 이 때 공백이 기준이 되지않고
+	한줄이 기준이 될 수 있나?
+	ex) arp의 결과가
+		Address		 HWtype 	HWaddress
+		192.186.0.1			54:8e:0a:00:2b:a1
+	이라면 for i in $(arp)를 하엿을 때 i가 Address > HWtype > HWaddress > 192.186.0.1 > 54:8e:0a:00:2b:a1 순으로 변하는데
+	이 때 i가 Address HWtype HWaddress > 192.168.0.1	54:8e:0a:00:2b:a1 이렇게 저장이 된다면
+	`expr $count %5 = 0`같은건 안 해도 된다.
