@@ -81,7 +81,7 @@ print("(7) 광주/전라/제주")
 
 area_select = input("\n어디서 관람하시겠습니까? : ")
 
-URL = "http://www.cgv.co.kr/common/showtimes/iframeMovie.aspx?midx="+data_idx[movie_select]+"&mcode=&areacode="+data_area[area_select]+"&date="+date_select
+URL = "http://www.cgv.co.kr/common/showtimes/iframeMovie.aspx?midx="+data_idx[movie_select]+"&mcode=20016940&areacode="+data_area[area_select]+"&date="+date_select
 
 res = requests.get(URL)
 #res.encoding = "UTF-8"
